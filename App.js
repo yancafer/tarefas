@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {View, Text, StyleSheet, SafeAreaView, TextInput, TouchableOpacity, FlatList} from 'react-native';
 
-import Login from './src/components';
+import Login from './src/components/Login';
 import TaskList from './src/components/TaskList';
 
 let tasks = [

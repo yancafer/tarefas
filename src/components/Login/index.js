@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {View, Text, StyleSheet, SafeAreaView, TextInput, TouchableOpacity} from 'react-native';
 
-import firebase from '../services/firebaseConnection';
+import firebase from '../../services/firebaseConnection';
 
 export default function Login({changeStatus}){
   const [type, setType] = useState('login');
