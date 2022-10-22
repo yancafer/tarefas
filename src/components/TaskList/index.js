@@ -1,12 +1,20 @@
 import React from "react";
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
+import Feather  from "react-native-vector-icons/Feather";
 
-export default function TaskList({ data }){
+export default function TaskList({ data, deleteItem, editItem }){
     return(
         <View style={styles.container}>
 
-            <Text> TESTE </Text>
+            <TouchableOpacity style={{marginRight: 10}} onPress={() => deleteItem(data.key)}>
+                <Feather name="trash" color="#fff" size={20}/>
+            </TouchableOpacity>
 
+            <View style={{paddingRight: 10}}>
+                <TouchableWithoutFeedback onPress={() => editItem(data) }>
+                    <Text style={{color: '#fff', paddingRight: 10}}>{data.nome}</Text>
+                </TouchableWithoutFeedback>
+            </View>
         </View>
     )
 }

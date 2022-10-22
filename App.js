@@ -15,6 +15,14 @@ export default function App(){
 
   const [newTask, setNewTask] = useState('');
 
+  function handleDelete(key){
+    console.log(key);
+  }
+
+  function handleEdit(data){
+    console.log("ITEM CLICADO", data);
+  }
+
   if(!user){
     return <Login changeStatus={ (user) => setUser(user) }/>
   }
@@ -41,7 +49,7 @@ export default function App(){
     data={tasks}
     keyExtractor={ item => item.key}
     renderItem={ ({item}) => (
-      <TaskList data={item}/>
+      <TaskList data={item} deleteItem={handleDelete} editItem={handleEdit}/>
     )}
     />
 
