@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {View, Text, StyleSheet, 
   SafeAreaView, TextInput, TouchableOpacity, 
   FlatList, Keyboard} from 'react-native';
@@ -15,6 +15,34 @@ export default function App(){
   const [tasks, setTasks] = useState([]);
 
   const [newTask, setNewTask] = useState('');
+
+  useEffect(() => {
+
+    function getUser(){
+      if(!user){
+        return;
+      }
+
+      firebase.database().ref('tarefas').child(user).once('value', (snapshot)=> {
+        setTasks([]);
+
+        snapshot?.forEach((childItem) => {
+          let data = {
+            key: childItem.key,
+            nome: childItem.val().nome
+          }
+
+          setTasks(oldTasks => [...oldTasks, data])
+        })
+
+      })
+
+    }
+
+
+    getUser();
+
+  }, [user])
 
   function handleAdd(){
     if(newTask === ''){
