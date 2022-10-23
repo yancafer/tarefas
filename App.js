@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import {View, Text, StyleSheet, SafeAreaView, TextInput, TouchableOpacity, FlatList} from 'react-native';
+import {View, Text, StyleSheet, 
+  SafeAreaView, TextInput, TouchableOpacity, 
+  FlatList, Keyboard} from 'react-native';
 
 import Login from './src/components/Login';
 import TaskList from './src/components/TaskList';
@@ -19,16 +21,23 @@ export default function App(){
       return;
     }
 
-    let tarefas =firebase.database().ref('tarefas').child(user);
+    let tarefas = firebase.database().ref('tarefas').child(user);
     let chave = tarefas.push().key;
 
     tarefas.child(chave).set({
       nome: newTask
     })
     .then (()=>{
-      console.log('TAREFA CRIADA')
+      const data = {
+        key: chave,
+        nome: newTask
+      };
+
+      setTasks(oldTasks => [...oldTasks, data])
     })
 
+    Keyboard.dismiss();
+    setNewTask('');
 
   }
 
