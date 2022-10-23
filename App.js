@@ -4,16 +4,33 @@ import {View, Text, StyleSheet, SafeAreaView, TextInput, TouchableOpacity, FlatL
 import Login from './src/components/Login';
 import TaskList from './src/components/TaskList';
 
-let tasks = [
-  {key: '1', nome: 'Comprar coca cola'},
-  {key: '2', nome: 'Estudar javascript'}
-]
+import firebase from './src/services/firebaseConnection';
+
 
 export default function App(){
 
   const [user, setUser] = useState(null);
+  const [tasks, setTasks] = useState([]);
 
   const [newTask, setNewTask] = useState('');
+
+  function handleAdd(){
+    if(newTask === ''){
+      return;
+    }
+
+    let tarefas =firebase.database().ref('tarefas').child(user);
+    let chave = tarefas.push().key;
+
+    tarefas.child(chave).set({
+      nome: newTask
+    })
+    .then (()=>{
+      console.log('TAREFA CRIADA')
+    })
+
+
+  }
 
   function handleDelete(key){
     console.log(key);
@@ -40,7 +57,7 @@ export default function App(){
     onChangeText={(text) => setNewTask(text)}
     />
 
-    <TouchableOpacity style={styles.buttonAdd}>
+    <TouchableOpacity style={styles.buttonAdd} onPress={handleAdd}>
       <Text style={styles.buttonText}>+</Text>
     </TouchableOpacity>
     </View>
